@@ -7,30 +7,33 @@ function App() {
   const elements = useSelector(store => store.elementList)
   const [newElement, setNewElement] = useState('');
 
-  const getElements = () => {
-    axios.get('/api/element').then(response => {
-      dispatch({ type: 'SET_ELEMENTS', payload: response.data });
-    })
-      .catch(error => {
-        console.log('error with element get request', error);
-      });
-  }
+  // const getElements = () => {
+  //   axios.get('/api/element').then(response => {
+  //     dispatch({ type: 'SET_ELEMENTS', payload: response.data });
+  //     dispatch({ type: 'RUN_FIRST_SAGA' });
+  //   })
+  //     .catch(error => {
+  //       console.log('error with element get request', error);
+  //     });
+  // }
 
   useEffect(() => {
-    getElements();
+    // getElements();
+    dispatch({ type: 'FETCH_ELEMENTS' })
   }, []);
 
   const addElement = () => {
-    axios.post('/api/element', { 
-      name: newElement
-    })
-      .then(() => {
-        getElements();
+    // axios.post('/api/element', { 
+    //   name: newElement
+    // })
+      // .then(() => {
+        dispatch({ type: 'ADD_ELEMENT',payload: { name: newElement }});
+        // dispatch({ type: 'FETCH_ELEMENTS' });
         setNewElement('');
-      })
-      .catch(error => {
-        console.log('error with element get request', error);
-      });
+      // })
+      // .catch(error => {
+      //   console.log('error with element get request', error);
+      // });
 
   }
 
